@@ -4,12 +4,11 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import java.util.stream.Collectors;
+
+import org.omg.CORBA.PRIVATE_MEMBER;
 
 
 public class FilteringText {
@@ -17,7 +16,6 @@ public class FilteringText {
     private String inputText;
     private List<String> textList = new LinkedList<String>();
 
-    
     public FilteringText() {
 
     }
@@ -40,8 +38,8 @@ public class FilteringText {
         return inputText;
     }
 
-    public void setText(String text) {
-        this.inputText = text;
+    public void setText(String inputText) {
+        this.inputText = inputText;
     }
 
     public List<String> getTextList() {
@@ -55,19 +53,24 @@ public class FilteringText {
     public void readText() throws IOException {
         BufferedReader buffered_reader = new BufferedReader(new InputStreamReader(System.in));
         System.out.println("Ведіть текст");
-        inputText = buffered_reader.readLine();
+        this.inputText = buffered_reader.readLine();
         System.out.println("Ведіть розмір слова");
-        numberLine = Integer.parseInt(buffered_reader.readLine());
+        this.numberLine = Integer.parseInt(buffered_reader.readLine());
     }
 
-    public List<String> sortingText() {
-      String[] text_time;
-      String delimeter = " ";
-      text_time = inputText.split(delimeter);
-        return textList;
+    public List<String> searchText() {
+        String REGEX = " ";
+        Pattern pattern = Pattern.compile(REGEX);
+        String[] text_array = pattern.split(inputText);
+
+        for (int b = 0; b < text_array.length; b++) {
+            if (text_array[b].contains("_") && text_array[b].length() < this.numberLine) {
+                this.textList.add(text_array[b]);
+            }
+        }
+        return this.textList;
     }
-    
-    
+
     public List<String> sortByText() {
         Collections.sort(textList);
         return textList;
@@ -77,7 +80,7 @@ public class FilteringText {
         if (textList.isEmpty()) {
             System.out.println("Список пустий");
         } else {
-            System.out.println("Результат:\n");
+            System.out.println("Результат:");
             System.out.println(textList);
         }
     }
