@@ -6,6 +6,7 @@ import java.io.InputStreamReader;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Scanner;
 import java.util.regex.Pattern;
 
 import org.omg.CORBA.PRIVATE_MEMBER;
@@ -58,14 +59,19 @@ public class FilteringText {
         this.numberLine = Integer.parseInt(buffered_reader.readLine());
     }
 
+    public void readTextScanner() {
+          Scanner scan = new Scanner(System.in);
+        this.inputText = scan.toString();
+    }
+    
     public List<String> searchText() {
         String REGEX = " ";
         Pattern pattern = Pattern.compile(REGEX);
-        String[] text_array = pattern.split(inputText);
+        String[] textArray = pattern.split(inputText);
 
-        for (int b = 0; b < text_array.length; b++) {
-            if (text_array[b].contains("_") && text_array[b].length() < this.numberLine) {
-                this.textList.add(text_array[b]);
+        for (String word : textArray) {
+            if (word.contains("_") && word.length() < this.numberLine) {
+                this.textList.add(word);
             }
         }
         return this.textList;
@@ -83,5 +89,13 @@ public class FilteringText {
             System.out.println("Результат:");
             System.out.println(textList);
         }
+    }
+    
+    public List<String> processText(String input, int textLenth ) {
+        this.numberLine = textLenth;
+        this.setText(input);
+        this.searchText();
+        this.sortByText();
+        return this.textList;
     }
 }
