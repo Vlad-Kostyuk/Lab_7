@@ -61,14 +61,15 @@ public class FilteringText {
 
     public void readTextScanner() {
           Scanner scan = new Scanner(System.in);
-        this.inputText = scan.toString();
+          System.out.println("Ведіть текст");
+          this.inputText = scan.toString();
     }
     
     public List<String> searchText() {
-        String REGEX = " ";
+        String REGEX = ",";
         Pattern pattern = Pattern.compile(REGEX);
         String[] textArray = pattern.split(inputText);
-
+        
         for (String word : textArray) {
             if (word.contains("_") && word.length() < this.numberLine) {
                 this.textList.add(word);
@@ -97,5 +98,15 @@ public class FilteringText {
         this.searchText();
         this.sortByText();
         return this.textList;
+    }
+    
+    public void startSortText() {
+        try {
+            this.readText();
+            this.processText(this.inputText, this.numberLine);
+            this.printText();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
